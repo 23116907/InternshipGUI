@@ -18,7 +18,7 @@ sheet3.grid()
 sheet4.grid()
 sheet5.grid()
 
-sheet1.set_sheet_data([[f"{ri*cj*n*m}" for cj in range(3)] for ri in range(5)], round(2))
+sheet1.set_sheet_data([[f"{ri*cj*n}" for cj in range(3)] for ri in range(5)], round(2))
 sheet2.set_sheet_data([[f"{ri+cj}" for cj in range(1)] for ri in range(4)])
 sheet3.set_sheet_data([[f"{m+n}" for cj in range(1)] for ri in range(4)])
 sheet4.set_sheet_data([[f"{n}" for cj in range(1)] for ri in range(1)])
