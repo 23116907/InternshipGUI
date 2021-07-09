@@ -12,7 +12,7 @@ sheet3 = tksheet.Sheet(top_left_fg)
 sheet4 = tksheet.Sheet(top_right_bg)
 sheet5 = tksheet.Sheet(top_right_bg)
 
-sheet1.grid()
+sheet1.grid(column=0, row=0)
 sheet2.grid()
 sheet3.grid()
 sheet4.grid()
