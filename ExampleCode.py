@@ -1,9 +1,12 @@
 import tkinter as tk
 
+from tkinter import *
+
+
 import tksheet
 
 # This creates the main window.
-root = tk.Tk()
+root = Tk()
 
 
 # You create a table, and you add to "root".
@@ -13,6 +16,11 @@ sheet3 = tksheet.Sheet(root)
 
 # Divide root into a grid, tells where to place sheet in that grid
 
+clicked = StringVar()
+clicked.set("COM port list")
+
+clicked1 = StringVar()
+clicked1.set("COM port list")
 
 import random
 n = random.randint(1, 5)
@@ -42,54 +50,45 @@ sheet1.set_sheet_data(sheet1Data)
 sheet2.set_sheet_data(sheet2data)
 sheet3.set_sheet_data(sheet3data)
 
-rame1 = tk.Frame(master=root)
-rame2 = tk.Frame(master=root)
-rame3 = tk.Frame(master = root)
-fram1 = tk.Frame(master = root)
-fram2 = tk.Frame(master = root)
-frame1 = tk.Frame(master=root)
-frame2 = tk.Frame(master=root)
-frame3 = tk.Frame(master = root)
-frame4 = tk.Frame(master = root)
-frame5 = tk.Frame(master = root)
-frame6 = tk.Frame(master = root)
-lab1 = tk.Label(master = rame1, text = "COM port list")
-lab2 = tk.Label(master = rame2, text = "Connect")
-lab3 = tk.Label(master = rame3, text = "Status")
-labe1= tk.Label(master = fram1, text = "Velocities to test")
-labe2= tk.Label(master = fram2, text = "Positions to test")
-label = tk.Label(master=frame1, text = "Pattern Table")
-label2 = tk.Label(master=frame2, text = "randomize")
-label3 = tk.Label(master=frame3, text = "randomize")
-label4 = tk.Label(master = frame4, text = "Run Test")
-label5 = tk.Label(master = frame5, text = "Status")
-label6 = tk.Label(master=frame6, text = "Storage folder address")
-lab1.grid(column = 0, row = 0)
-lab2.grid(column = 1, row = 0)
-lab3.grid(column = 2, row = 0)
-labe1.grid(column = 1, row =1)
-labe2.grid(column = 2, row = 2)
-label.grid(column = 0, row = 2)
-label2.grid(column = 1, row = 2)
-label3.grid(column = 2, row = 2)
-label4.grid(column = 2, row=3)
-label5.grid(column=2, row=4)
-label6.grid(column=0, row=4)
 
-rame1.grid(column = 0, row = 0)
-rame2.grid(column = 1, row = 0)
-rame3.grid(column = 2, row = 0)
-fram1.grid(column = 1, row = 1)
-fram2.grid(column = 2, row = 1)
-frame1.grid(column = 0, row = 2)
-frame2.grid(column = 1, row = 2)
-frame3.grid(column = 2, row = 2)
-frame4.grid(column=2, row=3)
-frame5.grid(column=2, row=4)
-frame6.grid(column = 0, row=4)
-sheet1.grid(column=0, row=3)
-sheet2.grid(column = 1, row = 3)
-sheet3.grid(column = 2, row = 3)
+
+
+#drop_down = tk.Label(text = "COM port list                                                                                                                     ")
+drop_down = OptionMenu(root, clicked, "Port1", "Port2")
+connect_button = tk.Button(width = 10, height = 1, bg = "white", fg= "red", text = "Connect")
+status_label = tk.Label(text = "Status                                                                                                                             ")
+drop_down1 = OptionMenu(root, clicked1, "Port3", "Port4")
+#drop_down1 = tk.Label(text = "COM port list                                                                                                                     ")
+connect_button1 = tk.Button(width = 10, height = 1, bg = "white", fg= "red", text = "Connect")
+status_label1 = tk.Label(text = "Status                                                                                                                             ")
+velocities_label= tk.Label(text = "Velocities to test                                                                                                             ")
+positions_label= tk.Label(text = "Positions to test                                                                                                             ")
+pattern_Label = tk.Label(text = "Pattern Table                                                                                                                      ")
+c = Checkbutton(text = "Randomize")
+c2 = Checkbutton(text = "Randomize")
+runtest_button = tk.Button(width = 10, height = 1, bg="white", fg="black", text = "Run Test")
+status_label2 = tk.Label(text = "Status")
+address_bar = tk.Label(text = "Storage folder address")
+
+drop_down.grid(column = 0, row = 0)
+connect_button.grid(column = 1, row = 0)
+status_label.grid(column = 2, row = 0)
+drop_down1.grid(column = 0, row = 1)
+connect_button1.grid(column = 1, row = 1)
+status_label1.grid(column = 2, row = 1)
+velocities_label.grid(column = 1, row =2)
+positions_label.grid(column = 2, row = 2)
+pattern_Label.grid(column = 0, row = 3)
+c.grid(column = 1, row = 3)
+c2.grid(column = 2, row = 3)
+runtest_button.grid(column = 2, row=4)
+status_label2.grid(column=2, row=5)
+address_bar.grid(column=0, row=5)
+
+
+sheet1.grid(column=0, row=4)
+sheet2.grid(column = 1, row = 4)
+sheet3.grid(column = 2, row = 4)
 
 
 # table enable choices listed below:
@@ -120,50 +119,57 @@ sheet1.enable_bindings(("single_select",
                        "undo",
 
                        "edit_cell"))
-# Another way of doing this:
-# sheet.enable_bindings(bindings='all')
+sheet2.enable_bindings(("single_select",
 
-# Create a second table
-# sheet2 = tksheet.Sheet(root)
+                       "row_select",
 
-# Place the table
-#sheet2.grid(column=1, row=0)
+                       "arrowkeys",
 
-# Same data as the first table, but multiplied by two.
-# sheetData = [row1, row2, row3]
-#DoubleData = []
-#for Row in sheetData:
-    #DoubleRow = []
-    #for Number in Row:
-        #Number = Number * 2
-        #DoubleRow.append(Number)
-    #DoubleData.append(DoubleRow)
+                       "right_click_popup_menu",
 
-# Here you input the data to the table
-#sheet2.set_sheet_data(DoubleData)
+                       "rc_select",
 
-# Create a third table
-#sheet3 = tksheet.Sheet(root)
+                       "rc_insert_row",
 
-# Place the table
-#sheet3.grid(column=0, row=1)
+                       "rc_delete_row",
 
-# List comprehension
-#TripleData = [[Number * 3 for Number in Row] for Row in sheetData]
+                       "copy",
 
-# Here you input the data to the table
-#sheet3.set_sheet_data(TripleData)
+                       "cut",
 
-# Create a fourth table
-#sheet4 = tksheet.Sheet(root)
+                       "paste",
 
-# Place the table
-#sheet4.grid(column=0, row=1)
+                       "delete",
 
-# List comprehension
-#FourthData = [[Number * 3 for Number in Row] for Row in sheetData]
+                       "undo",
 
-# Here you input the data to the table
-#sheet4.set_sheet_data(FourthData)
+                       "edit_cell"))
+sheet3.enable_bindings(("single_select",
+
+                       "row_select",
+
+                       "column_width_resize",
+
+                       "arrowkeys",
+
+                       "right_click_popup_menu",
+
+                       "rc_select",
+
+                       "rc_insert_row",
+
+                       "rc_delete_row",
+
+                       "copy",
+
+                       "cut",
+
+                       "paste",
+
+                       "delete",
+
+                       "undo",
+
+                       "edit_cell"))
 
 root.mainloop()
