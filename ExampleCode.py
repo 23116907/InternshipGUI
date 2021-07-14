@@ -2,12 +2,12 @@ import tkinter as tk
 
 from tkinter import *
 
-
 import tksheet
 
 # This creates the main window.
 root = Tk()
 
+root.configure(bg = "white")
 
 # You create a table, and you add to "root".
 sheet1 = tksheet.Sheet(root)
@@ -51,44 +51,50 @@ sheet2.set_sheet_data(sheet2data)
 sheet3.set_sheet_data(sheet3data)
 
 
+velocities_table_upper_frame = tk.Frame(root)
+velocities_table_upper_frame.grid(column = 1, row = 3, sticky = tk.W, columnspan=1)
 
+velocities_table_upper_frame1 = tk.Frame(root)
+velocities_table_upper_frame1.grid(column = 2, row = 3, sticky = tk.W, columnspan=1)
 
-#drop_down = tk.Label(text = "COM port list                                                                                                                     ")
+frm_entry = tk.Frame(master = root)
+
 drop_down = OptionMenu(root, clicked, "Port1", "Port2")
 connect_button = tk.Button(width = 10, height = 1, bg = "white", fg= "red", text = "Connect")
-status_label = tk.Label(text = "Status                                                                                                                             ")
+status_label = tk.Label(width=10, text = "Status")
 drop_down1 = OptionMenu(root, clicked1, "Port3", "Port4")
-#drop_down1 = tk.Label(text = "COM port list                                                                                                                     ")
 connect_button1 = tk.Button(width = 10, height = 1, bg = "white", fg= "red", text = "Connect")
-status_label1 = tk.Label(text = "Status                                                                                                                             ")
-velocities_label= tk.Label(text = "Velocities to test                                                                                                             ")
-positions_label= tk.Label(text = "Positions to test                                                                                                             ")
-pattern_Label = tk.Label(text = "Pattern Table                                                                                                                      ")
-c = Checkbutton(text = "Randomize")
-c2 = Checkbutton(text = "Randomize")
+status_label1 = tk.Label(width = 10, text = "Status")
+velocities_label= tk.Label(velocities_table_upper_frame, bg="white", text = "Velocities to test")
+positions_label= tk.Label(velocities_table_upper_frame1, bg="white", text = "Positions to test")
+pattern_Label = tk.Label(bg="white", text = "Pattern Table")
+c = Checkbutton(velocities_table_upper_frame, text = "Randomize")
+c2 = Checkbutton(velocities_table_upper_frame1, bg="white", text = "Randomize")
 runtest_button = tk.Button(width = 10, height = 1, bg="white", fg="black", text = "Run Test")
-status_label2 = tk.Label(text = "Status")
-address_bar = tk.Label(text = "Storage folder address")
+status_label2 = tk.Label(bg="white", text = "Status")
+address_bar = tk.Label(bg="white", text = "Storage folder address")
 
-drop_down.grid(column = 0, row = 0)
-connect_button.grid(column = 1, row = 0)
-status_label.grid(column = 2, row = 0)
-drop_down1.grid(column = 0, row = 1)
-connect_button1.grid(column = 1, row = 1)
-status_label1.grid(column = 2, row = 1)
-velocities_label.grid(column = 1, row =2)
-positions_label.grid(column = 2, row = 2)
-pattern_Label.grid(column = 0, row = 3)
-c.grid(column = 1, row = 3)
-c2.grid(column = 2, row = 3)
+drop_down.grid( sticky= tk.W, column = 0, row = 0)
+connect_button.grid(column = 1, row = 0, sticky= tk.W)
+status_label.grid(column = 2, row = 0, sticky= tk.W)
+drop_down1.grid( sticky= tk.W, column = 0, row = 1)
+connect_button1.grid(column = 1, row = 1, sticky= tk.W)
+status_label1.grid(column = 2, row = 1, sticky= tk.W)
+velocities_label.grid(column = 0, row =0)
+positions_label.grid(column = 0, row = 0, sticky= tk.W)
+pattern_Label.grid(column = 0, row = 3, sticky= tk.W)
+c.grid(sticky = tk.W, column = 1, row = 0)
+c2.grid(sticky= tk.W, column = 1, row = 0)
 runtest_button.grid(column = 2, row=4)
 status_label2.grid(column=2, row=5)
-address_bar.grid(column=0, row=5)
+address_bar.grid(column=0, row=5, sticky= tk.W)
 
 
-sheet1.grid(column=0, row=4)
+sheet1.grid(sticky = tk.W, column=0, row=4)
 sheet2.grid(column = 1, row = 4)
 sheet3.grid(column = 2, row = 4)
+
+
 
 
 # table enable choices listed below:
