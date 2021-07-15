@@ -4,10 +4,20 @@ from tkinter import *
 
 import tksheet
 
+
+
 # This creates the main window.
-root = Tk()
+root=Tk()
 
 root.configure(bg = "white")
+
+from tkinter.filedialog import askdirectory
+
+String_Var = StringVar()
+
+def select_directory():
+    String_Var.set(askdirectory())
+
 
 # You create a table, and you add to "root".
 sheet1 = tksheet.Sheet(root)
@@ -51,131 +61,99 @@ sheet2.set_sheet_data(sheet2data)
 sheet3.set_sheet_data(sheet3data)
 
 
-velocities_table_upper_frame = tk.Frame(root)
-velocities_table_upper_frame.grid(column = 1, row = 3, sticky = tk.W, columnspan=1)
+velocities_table_frame = tk.Frame(root)
+velocities_table_frame.grid(column=1, row=3, sticky=tk.W, columnspan=1)
 
-velocities_table_upper_frame1 = tk.Frame(root)
-velocities_table_upper_frame1.grid(column = 2, row = 3, sticky = tk.W, columnspan=1)
+positions_table_top_frame = tk.Frame(root)
+positions_table_top_frame.grid(column=2, row=3, sticky=tk.W, columnspan=1)
 
-frm_entry = tk.Frame(master = root)
+positions_table_labels_frame = tk.Frame(root)
+positions_table_labels_frame.grid(column=2, row=4, columnspan=1)
+
+frm_entry=tk.Frame(master=root)
 
 drop_down = OptionMenu(root, clicked, "Port1", "Port2")
-connect_button = tk.Button(width = 10, height = 1, bg = "white", fg= "red", text = "Connect")
-status_label = tk.Label(width=10, text = "Status")
+connect_button = tk.Button(width=10, height=1, bg = "white", fg= "red", text="Connect")
+status_label = tk.Label(width=10, text="Status")
 drop_down1 = OptionMenu(root, clicked1, "Port3", "Port4")
-connect_button1 = tk.Button(width = 10, height = 1, bg = "white", fg= "red", text = "Connect")
-status_label1 = tk.Label(width = 10, text = "Status")
-velocities_label= tk.Label(velocities_table_upper_frame, bg="white", text = "Velocities to test")
-positions_label= tk.Label(velocities_table_upper_frame1, bg="white", text = "Positions to test")
-pattern_Label = tk.Label(bg="white", text = "Pattern Table")
-c = Checkbutton(velocities_table_upper_frame, text = "Randomize")
-c2 = Checkbutton(velocities_table_upper_frame1, bg="white", text = "Randomize")
-runtest_button = tk.Button(width = 10, height = 1, bg="white", fg="black", text = "Run Test")
-status_label2 = tk.Label(bg="white", text = "Status")
-address_bar = tk.Label(bg="white", text = "Storage folder address")
-
-drop_down.grid( sticky= tk.W, column = 0, row = 0)
-connect_button.grid(column = 1, row = 0, sticky= tk.W)
-status_label.grid(column = 2, row = 0, sticky= tk.W)
-drop_down1.grid( sticky= tk.W, column = 0, row = 1)
-connect_button1.grid(column = 1, row = 1, sticky= tk.W)
-status_label1.grid(column = 2, row = 1, sticky= tk.W)
-velocities_label.grid(column = 0, row =0)
-positions_label.grid(column = 0, row = 0, sticky= tk.W)
-pattern_Label.grid(column = 0, row = 3, sticky= tk.W)
-c.grid(sticky = tk.W, column = 1, row = 0)
-c2.grid(sticky= tk.W, column = 1, row = 0)
-runtest_button.grid(column = 2, row=4)
-status_label2.grid(column=2, row=5)
-address_bar.grid(column=0, row=5, sticky= tk.W)
+connect_button1 = tk.Button(width=10, height=1, bg = "white", fg= "red", text="Connect")
+status_label1 = tk.Label(width=10, text="Status")
+velocities_label = tk.Label(velocities_table_frame, bg="white", text="Velocities to test")
+positions_label = tk.Label(positions_table_top_frame, bg="white", text="Positions to test")
+pattern_Label = tk.Label(bg="white", text="Pattern Table")
+c = Checkbutton(velocities_table_frame, text="Randomize")
+c2 = Checkbutton(positions_table_top_frame, bg="white", text="Randomize")
+runtest_button = tk.Button(positions_table_labels_frame, width=10, height=1, bg="white", fg="black", text="Run Test")
+status_label2 = tk.Label(positions_table_labels_frame, bg="white", text="Status")
+storage_folder_button = tk.Button(width = 60, height =1, command = select_directory, bg="white", text="Storage folder address")
 
 
-sheet1.grid(sticky = tk.W, column=0, row=4)
-sheet2.grid(column = 1, row = 4)
-sheet3.grid(column = 2, row = 4)
+drop_down.grid( sticky=tk.W, column=0, row=0)
+connect_button.grid(column=1, row=0, sticky=tk.W)
+status_label.grid(column=2, row=0, sticky=tk.W)
+drop_down1.grid( sticky=tk.W, column=0, row=1)
+connect_button1.grid(column=1, row=1, sticky=tk.W)
+status_label1.grid(column=2, row=1, sticky=tk.W)
+velocities_label.grid(column=0, row=0)
+positions_label.grid(column=0, row=0, sticky=tk.W)
+pattern_Label.grid(column=0, row=3, sticky=tk.W)
+c.grid(sticky=tk.W, column=1, row=0)
+c2.grid(sticky=tk.W, column=1, row=0)
+runtest_button.grid(sticky=tk.NE, column=0, row=0)
+status_label2.grid(sticky=tk.NE, column=0, row=1)
+storage_folder_button.grid(column=0, row=5, sticky = tk.NW)
 
 
+sheet1.grid(sticky=tk.W, column=0, row=4)
+sheet2.grid(column=1, row=4)
+sheet3.grid(sticky = tk.W, column=2, row=4)
+
+sheet1.headers(["Time(S)", "Velocity(rev/s)", "torque(NM)"])
 
 
 # table enable choices listed below:
 sheet1.enable_bindings(("single_select",
-
                        "row_select",
-
                        "column_width_resize",
-
                        "arrowkeys",
-
                        "right_click_popup_menu",
-
                        "rc_select",
-
                        "rc_insert_row",
-
                        "rc_delete_row",
-
                        "copy",
-
                        "cut",
-
                        "paste",
-
                        "delete",
-
                        "undo",
-
                        "edit_cell"))
+
 sheet2.enable_bindings(("single_select",
-
                        "row_select",
-
                        "arrowkeys",
-
                        "right_click_popup_menu",
-
                        "rc_select",
-
                        "rc_insert_row",
-
                        "rc_delete_row",
-
                        "copy",
-
                        "cut",
-
                        "paste",
-
                        "delete",
-
                        "undo",
-
                        "edit_cell"))
+
 sheet3.enable_bindings(("single_select",
-
                        "row_select",
-
                        "column_width_resize",
-
                        "arrowkeys",
-
                        "right_click_popup_menu",
-
                        "rc_select",
-
                        "rc_insert_row",
-
                        "rc_delete_row",
-
                        "copy",
-
                        "cut",
-
                        "paste",
-
                        "delete",
-
                        "undo",
-
                        "edit_cell"))
 
 root.mainloop()
