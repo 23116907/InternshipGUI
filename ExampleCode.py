@@ -1,7 +1,5 @@
-import tkinter as tk
-
 from tkinter import *
-
+from tkinter.filedialog import askdirectory
 import tksheet
 
 
@@ -11,7 +9,6 @@ root=Tk()
 
 root.configure(bg = "white")
 
-from tkinter.filedialog import askdirectory
 
 String_Var = StringVar()
 
@@ -61,52 +58,52 @@ sheet2.set_sheet_data(sheet2data)
 sheet3.set_sheet_data(sheet3data)
 
 
-velocities_table_frame = tk.Frame(root)
-velocities_table_frame.grid(column=1, row=3, sticky=tk.W, columnspan=1)
+velocities_table_frame = Frame(root)
+velocities_table_frame.grid(column=1, row=3, sticky=W, columnspan=1)
 
-positions_table_top_frame = tk.Frame(root)
-positions_table_top_frame.grid(column=2, row=3, sticky=tk.W, columnspan=1)
+positions_table_top_frame = Frame(root)
+positions_table_top_frame.grid(column=2, row=3, sticky=W, columnspan=1)
 
-positions_table_labels_frame = tk.Frame(root)
+positions_table_labels_frame = Frame(root)
 positions_table_labels_frame.grid(column=2, row=4, columnspan=1)
 
-frm_entry=tk.Frame(master=root)
+frm_entry=Frame(master=root)
 
 drop_down = OptionMenu(root, clicked, "Port1", "Port2")
-connect_button = tk.Button(width=10, height=1, bg = "white", fg= "red", text="Connect")
-status_label = tk.Label(width=10, text="Status")
+connect_button = Button(width=10, height=1, bg = "white", fg= "red", text="Connect")
+status_label = Label(width=10, text="Status")
 drop_down1 = OptionMenu(root, clicked1, "Port3", "Port4")
-connect_button1 = tk.Button(width=10, height=1, bg = "white", fg= "red", text="Connect")
-status_label1 = tk.Label(width=10, text="Status")
-velocities_label = tk.Label(velocities_table_frame, bg="white", text="Velocities to test")
-positions_label = tk.Label(positions_table_top_frame, bg="white", text="Positions to test")
-pattern_Label = tk.Label(bg="white", text="Pattern Table")
+connect_button1 = Button(width=10, height=1, bg = "white", fg= "red", text="Connect")
+status_label1 = Label(width=10, text="Status")
+velocities_label = Label(velocities_table_frame, bg="white", text="Velocities to test")
+positions_label = Label(positions_table_top_frame, bg="white", text="Positions to test")
+pattern_Label = Label(bg="white", text="Pattern Table")
 c = Checkbutton(velocities_table_frame, text="Randomize")
 c2 = Checkbutton(positions_table_top_frame, bg="white", text="Randomize")
-runtest_button = tk.Button(positions_table_labels_frame, width=10, height=1, bg="white", fg="black", text="Run Test")
-status_label2 = tk.Label(positions_table_labels_frame, bg="white", text="Status")
-storage_folder_button = tk.Button(width = 60, height =1, command = select_directory, bg="white", text="Storage folder address")
+runtest_button = Button(positions_table_labels_frame, width=10, height=1, bg="white", fg="black", text="Run Test")
+status_label2 = Label(positions_table_labels_frame, bg="white", text="Status")
+storage_folder_button = Button(width = 60, height =1, command = select_directory, bg="white", text="Storage folder address")
 
 
-drop_down.grid( sticky=tk.W, column=0, row=0)
-connect_button.grid(column=1, row=0, sticky=tk.W)
-status_label.grid(column=2, row=0, sticky=tk.W)
-drop_down1.grid( sticky=tk.W, column=0, row=1)
-connect_button1.grid(column=1, row=1, sticky=tk.W)
-status_label1.grid(column=2, row=1, sticky=tk.W)
+drop_down.grid( sticky=W, column=0, row=0)
+connect_button.grid(column=1, row=0, sticky=W)
+status_label.grid(column=2, row=0, sticky=W)
+drop_down1.grid( sticky=W, column=0, row=1)
+connect_button1.grid(column=1, row=1, sticky=W)
+status_label1.grid(column=2, row=1, sticky=W)
 velocities_label.grid(column=0, row=0)
-positions_label.grid(column=0, row=0, sticky=tk.W)
-pattern_Label.grid(column=0, row=3, sticky=tk.W)
-c.grid(sticky=tk.W, column=1, row=0)
-c2.grid(sticky=tk.W, column=1, row=0)
-runtest_button.grid(sticky=tk.NE, column=0, row=0)
-status_label2.grid(sticky=tk.NE, column=0, row=1)
-storage_folder_button.grid(column=0, row=5, sticky = tk.NW)
+positions_label.grid(column=0, row=0, sticky=W)
+pattern_Label.grid(column=0, row=3, sticky=W)
+c.grid(sticky=W, column=1, row=0)
+c2.grid(sticky=W, column=1, row=0)
+runtest_button.grid(sticky=NE, column=0, row=0)
+status_label2.grid(sticky=NE, column=0, row=1)
+storage_folder_button.grid(column=0, row=5, sticky = NW)
 
 
-sheet1.grid(sticky=tk.W, column=0, row=4)
+sheet1.grid(sticky=W, column=0, row=4)
 sheet2.grid(column=1, row=4)
-sheet3.grid(sticky = tk.W, column=2, row=4)
+sheet3.grid(sticky = W, column=2, row=4)
 
 sheet1.headers(["Time(S)", "Velocity(rev/s)", "torque(NM)"])
 
