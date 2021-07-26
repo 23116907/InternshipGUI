@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.filedialog import askdirectory
 import tksheet
 import random
+from random import shuffle
 import time
 
 
@@ -114,7 +115,11 @@ def run_test_callback():
         print()
 
 
-
+def click_velocity_checkbutton():
+    if Velocity_Checkbutton(TRUE):
+        shuffle(velocities_tabledata)
+    else:
+        return
 
 
 # Divide root into a grid, tells where to place sheet in that grid
@@ -128,7 +133,6 @@ positions_com_port.set("COM port list")
 n = random.randint(1, 5)
 m = random.randint(1, 5)
 l = random.randint(1, 5)
-#j = round(random.uniform(-1.00, 1.00), 2)
 j = '1'
 k = random.randint(1, 5)
 
@@ -154,6 +158,8 @@ dow4 = [4]
 pattern_tableData = [row1, row2, row3]
 velocities_tabledata = [cow1, cow2, cow3, cow4]
 positions_tabledata = [dow1, dow2, dow3, dow4]
+
+shuffle(positions_tabledata)
 
 # Here you input the data to the table
 pattern_table.set_sheet_data(pattern_tableData)
@@ -181,7 +187,7 @@ status_label1 = Label(width=10, text="Status", bg="white")
 velocities_label = Label(velocities_table_frame, bg="white", text="Velocities to test")
 positions_label = Label(positions_table_top_frame, bg="white", text="Positions to test")
 pattern_Label = Label(bg="white", text="Pattern Table")
-Velocity_Checkbutton = Checkbutton(velocities_table_frame, bg="white", text="Randomize",variable=randomize_velocity_checkbutton_bool)
+Velocity_Checkbutton = Checkbutton(velocities_table_frame, bg="white", text="Randomize", command = click_velocity_checkbutton, variable=randomize_velocity_checkbutton_bool)
 Position_Checkbutton = Checkbutton(positions_table_top_frame, bg="white", text="Randomize",variable=randomize_position_checkbutton_bool)
 
 runtest_button = Button(positions_table_labels_frame, width=10, height=1, bg="white", fg="black", text="Run Test", command=run_test_callback)
