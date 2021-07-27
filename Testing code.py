@@ -17,8 +17,17 @@ directory_name_str = StringVar()
 
 runtest_status_label_str = StringVar()
 
+COM_port_data = StringVar()
+
+status_label1 = StringVar()
+
+checkbutton_status = StringVar()
+
 def select_directory():
     directory_name_str.set(askdirectory())
+
+def click_velocity_checkbutton():
+    checkbutton_status.set(askdirectory())
 
 randomize_velocity_checkbutton_bool = BooleanVar(value=False)
 randomize_position_checkbutton_bool = BooleanVar(value=False)
@@ -69,17 +78,19 @@ def is_table_empty(table):
              #   return FALSE
     return TRUE
 
-def no_com_port(COM_port):
-    COM_port_data = COM_port.get_port_data(COM_port !="Port1" or COM_port !="Port2")
-    if not COM_port_data:
+def no_COM_port(COM_port):
+    COM_port_data = COM_port.get
+    if COM_port_data !="COM port list":
         return TRUE
+    else:
+        return FALSE
 
-
-def COM_port_check():
-    if not no_com_port:
+def COM_port_inspect():
+    if not no_COM_port(velocities_com_port):
         status_label1.set('Ready to run')
-    elif no_com_port():
+    else:
         status_label1.set('No port')
+
 
 
 
@@ -90,7 +101,7 @@ def run_test_callback():
         runtest_status_label_str.set("Error: Empty directory address.")
         return
     else:
-        runtest_status_label_str.set("")
+        runtest_status_label_str.set("Successful")
     pattern_table_data = pattern_table.get_sheet_data(return_copy = True, get_header = False, get_index = False)
     if is_table_empty(pattern_table):
         runtest_status_label_str.set("Error: Please enter pattern data.")
@@ -116,7 +127,7 @@ def run_test_callback():
 
 
 def click_velocity_checkbutton():
-    if Velocity_Checkbutton(TRUE):
+    if checkbutton_status.get:
         shuffle(velocities_tabledata)
     else:
         return
@@ -179,7 +190,7 @@ positions_table_labels_frame.grid(column=2, row=4, columnspan=1)
 frm_entry=Frame(master=root)
 
 drop_down = OptionMenu(root, velocities_com_port, "Port1", "Port2")
-connect_button = Button(width=10, height=1, bg = "white", fg= "black", text="Connect", command=COM_port_check)
+connect_button = Button(width=10, height=1, bg = "white", fg= "black", text="Connect", command=COM_port_inspect)
 status_label = Label(width=10, text="Status", bg="white")
 drop_down1 = OptionMenu(root, positions_com_port, "Port3", "Port4")
 connect_button1 = Button(width=10, height=1, bg = "white", fg= "black", text="Connect")
