@@ -50,11 +50,13 @@ def send_torque_to_MCU(torque):
     print(torque)
 
 def send_command_to_start_running_MCU():
-    print ("Start running MCU")
+    print("Start running MCU")
 
 
 def get_number_of_rows(table_data):
     return len(table_data)
+
+
 
 
 def is_table_empty(table):
@@ -113,35 +115,33 @@ def run_test_callback():
         runtest_status_label_str.set("Error: Please enter pattern data.")
         return
     velocities_table_data = velocities_table.get_sheet_data(return_copy=True, get_header = False, get_index = False)
+    velocity_data = click_velocity_checkbutton()
+    position_data = click_positions_checkbutton()
     if is_table_empty(velocities_table) and is_table_empty(positions_table):
         for row in pattern_table_data:
+            send_command_to_start_running_MCU()
             send_velocity_to_MCU(row[1])
             send_torque_to_MCU(row[2])
-            send_command_to_start_running_MCU()
             time.sleep(row[0])
+        print("Stop Running MCU")
         #send_command_to_stop_running_MCU()
     elif not is_table_empty(velocities_table) and is_table_empty(positions_table):
-        print("Hello")
-        velocity_data = click_velocity_checkbutton()
         print(velocity_data)
     elif not is_table_empty(positions_table) and is_table_empty(velocities_table):
-        print("Hello")
-        position_data = click_positions_checkbutton()
         print(position_data)
     else:
         print("Hello")
-        velocity_data = click_velocity_checkbutton()
         print(velocity_data)
-        position_data = click_positions_checkbutton()
         print(position_data)
 
 
 def click_velocity_checkbutton():
     randomize_velocity_checkbutton = randomize_velocity_checkbutton_bool.get()
-    scan_velocity_table = velocities_table.get_sheet_data(return_copy = TRUE)
+    scan_velocity_table = velocities_table.get_sheet_data(return_copy=TRUE)
     if randomize_velocity_checkbutton:
         shuffle(scan_velocity_table)
     return scan_velocity_table
+
 
 def click_positions_checkbutton():
     randomize_positions_checkbutton = randomize_position_checkbutton_bool.get()
@@ -158,7 +158,7 @@ torque_com_port = StringVar()
 torque_com_port.set("COM port list")
 
 n = random.randint(1, 5)
-m = random.randint(1, 5)
+m = random.randint(9, 10)
 l = random.randint(1, 5)
 j = '1'
 k = random.randint(1, 5)
