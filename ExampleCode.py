@@ -4,7 +4,7 @@ import tksheet
 import random
 from random import shuffle
 import time
-
+import copy
 
 # This creates the main window.
 root=Tk()
@@ -26,6 +26,30 @@ runtest_status_label_str.set("Status ")
 
 COM_port_data = StringVar()
 
+def run_single_test(pattern_data):
+    send_command_to_start_running_MCU()
+    for row in pattern_data:
+        send_velocity_to_MCU(row[1])
+        send_torque_to_MCU(row[2])
+        time.sleep(row[0])
+    print("Stop Running MCU")
+
+def run_second_test(positions_data):
+    send_command_to_start_running_MCU()
+    for row in positions_data:
+        send_position_data_to_MCU(row[0])
+    print("Stop Running MCU")
+
+def run_combined_test(pattern_data,positions_data):
+    send_command_to_start_running_MCU()
+    for row in positions_data:
+        send_position_data_to_MCU(row[0])
+    for row in pattern_data:
+        send_velocity_to_MCU(row[1])
+        send_torque_to_MCU(row[2])
+        time.sleep(row[0])
+        print('Stop Running MCU')
+
 
 def select_directory():
     directory_name_str.set(askdirectory())
@@ -44,6 +68,10 @@ positions_table = tksheet.Sheet(root)
 def send_velocity_to_MCU(velocity):
     print("Velocity sent to the MCU:")
     print(velocity)
+
+def send_position_data_to_MCU(position):
+    print("Position sent to the MCU:")
+    print(position)
 
 def send_torque_to_MCU(torque):
     print("Torque sent to the MCU:")
@@ -101,6 +129,27 @@ def torques_COM_port_inspect():
     else:
         torque_COM_port_status_label_str.set('No Port')
 
+def transform_table_data(data):
+    transform_data = []
+    try:
+        for row in data:
+            new_row = []
+            for element in row:
+                try:
+                    new_row.append(float(element))
+                except:
+                    print(element)
+                    if element != "VELOCITY":
+                        raise Exception('Incorrect input')
+                    else:
+                        new_row.append(element)
+            transform_data.append(new_row)
+        print("This is the transformed data.")
+        print(transform_data)
+        return transform_data
+    except Exception as error_message:
+        print(error_message)
+        return None
 
 
 def run_test_callback():
@@ -111,26 +160,41 @@ def run_test_callback():
         runtest_status_label_str.set("Successful ")
         #run test_code
     pattern_table_data = pattern_table.get_sheet_data(return_copy = True, get_header = False, get_index = False)
+    pattern_table_data = transform_table_data(pattern_table_data)
     if is_table_empty(pattern_table):
         runtest_status_label_str.set("Error: Please enter pattern data.")
         return
-    velocities_table_data = velocities_table.get_sheet_data(return_copy=True, get_header = False, get_index = False)
+    #velocities_table_data = velocities_table.get_sheet_data(return_copy=True, get_header = False, get_index = False)
     velocity_data = click_velocity_checkbutton()
+    if not is_table_empty(velocities_table):
+        velocity_data = transform_table_data(velocity_data)
     position_data = click_positions_checkbutton()
+    if not is_table_empty(positions_table):
+        position_data = transform_table_data(position_data)
     if is_table_empty(velocities_table) and is_table_empty(positions_table):
-        for row in pattern_table_data:
-            send_command_to_start_running_MCU()
-            send_velocity_to_MCU(row[1])
-            send_torque_to_MCU(row[2])
-            time.sleep(row[0])
-        print("Stop Running MCU")
+        run_single_test(pattern_table_data)
         #send_command_to_stop_running_MCU()
     elif not is_table_empty(velocities_table) and is_table_empty(positions_table):
-        print(velocity_data)
+        for VELOCITY in velocity_data:
+            new_pattern_data = copy.deepcopy(pattern_table_data)
+            for row in new_pattern_data:
+                if row[1] == "VELOCITY":
+                    row[1] = VELOCITY[0]
+            run_single_test(new_pattern_data)
     elif not is_table_empty(positions_table) and is_table_empty(velocities_table):
-        print(position_data)
+        run_second_test(position_data)
+        run_single_test(pattern_table_data)
+        #run_combined_test("pattern_data" 'positions_data')
+
+    #   print(position_data)
     else:
-        print("Hello")
+        for VELOCITY in velocity_data:
+            new_pattern_data = copy.deepcopy(pattern_table_data)
+            for row in new_pattern_data:
+                if row[1] == "VELOCITY":
+                    row[1] = VELOCITY[0]
+            run_second_test(position_data)
+            run_single_test(new_pattern_data)
         print(velocity_data)
         print(position_data)
 
